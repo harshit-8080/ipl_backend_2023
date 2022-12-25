@@ -44,3 +44,18 @@ exports.getAllUser = async (req, res) => {
         });
       }
 }
+
+exports.signin = async (req,res) => {
+
+    try {
+
+        // write logic to sign in user
+
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          msg: "Internal server error",
+        });
+      }
+
+}
