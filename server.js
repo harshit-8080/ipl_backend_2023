@@ -1,6 +1,8 @@
 const express = require("express");
 const { TeamRouter } = require("./src/routes/teams.route");
+const { UserRouter } = require("./src/routes/user.route");
 
+// this function helps us to listen and start the server. 
 const setupAndStartServer = async function () {
   const app = express();
 
@@ -29,10 +31,12 @@ const setupAndStartServer = async function () {
 
   app.use(express.json());
   app.use(TeamRouter);
+  app.use(UserRouter);
 
   app.listen(3000, () => {
     console.log("Server started at 3000");
   });
 };
 
+//here we are calling
 setupAndStartServer();
