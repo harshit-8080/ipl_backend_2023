@@ -15,7 +15,28 @@ exports.createUser = async (req,res) => {
           sucess:true,  
           response: result,
         });
-        
+
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          msg: "Internal server error",
+        });
+      }
+}
+
+exports.getAllUser = async (req, res) => {
+
+    try {
+
+        const result = await User.findAll({
+            attributes:["id","name","email"]
+        });
+    
+        return res.status(201).json({
+          sucess:true,  
+          response: result,
+        });
+
       } catch (error) {
         console.log(error);
         return res.status(500).json({
