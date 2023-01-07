@@ -1,4 +1,5 @@
 const { User } = require("../models/index");
+const tokenHelper = require("../utils/tokenhelper");
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
@@ -68,9 +69,12 @@ exports.signin = async (req, res) => {
     }
     if (checkUser) {
       const checkPassword = await bcrypt.compare(user.password, checkUser.password);
+
+      const token = tokenHelper.createToken(checkUser.email);
       if (checkPassword) {
         return res.status(200).json({
-          "msg": 'Login Sucessfull '
+          "msg": 'Login Sucessfull ',
+          "token":token
         })
       }
       else {
