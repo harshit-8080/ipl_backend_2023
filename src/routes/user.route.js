@@ -1,11 +1,12 @@
 const express = require("express");
+const {auth} = require("../middlewares/token");
 const UserController = require("../controllers/user.controller");
 
 const UserRouter = express.Router();
 
 UserRouter.post("/user", UserController.createUser);
 
-UserRouter.get("/users", UserController.getAllUser);
+UserRouter.get("/users", auth ,UserController.getAllUser);
 
 UserRouter.post("/signin", UserController.signin);
 
