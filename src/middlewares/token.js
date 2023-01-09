@@ -7,8 +7,8 @@ exports.auth = async (req, res,next) => {
         const token = req.get("Authorization");
         
         if(token){
-            const payload  = await jwt.verify(token.split(" ")[1],"msg");
-            req.email = payload.email;
+            const check  = await jwt.verify(token.split(" ")[1],"msg");
+            req.email = check.email;
             next();
         }
         else{
