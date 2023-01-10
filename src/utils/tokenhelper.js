@@ -6,3 +6,10 @@ exports.createToken = (email) => {
 
     return token;
 }
+
+exports.verifyToken = (token) => {
+
+    const decode = jwt.verify(token,"msg");
+
+    return decode;
+}
