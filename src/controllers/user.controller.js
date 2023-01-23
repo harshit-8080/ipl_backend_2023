@@ -1,6 +1,8 @@
 const { User } = require("../models/index");
 const tokenHelper = require("../utils/tokenhelper");
+const otpHelper = require("../utils/otpHelper");
 const bcrypt = require('bcrypt');
+
 
 exports.createUser = async (req, res) => {
 
@@ -62,9 +64,9 @@ exports.signin = async (req, res) => {
         email: user.email
       }
     })
-    if(!checkUser){
+    if (!checkUser) {
       return res.status(200).json({
-        "msg":"Invalid Email"
+        "msg": "Invalid Email"
       })
     }
     if (checkUser) {
@@ -74,7 +76,7 @@ exports.signin = async (req, res) => {
       if (checkPassword) {
         return res.status(200).json({
           "msg": 'Login Sucessfull ',
-          "token":token
+          "token": token
         })
       }
       else {
@@ -92,3 +94,58 @@ exports.signin = async (req, res) => {
   }
 
 }
+
+
+exports.requestOtp = async (req, res) => {
+  try {
+      const user = {
+      email: req.body.email,
+    }
+    const checkUser = await User.findOne({
+      where:
+      {
+        email: user.email
+      }
+    })
+    if (!checkUser) {
+      return res.status(200).json({
+        "msg": "Invalid Email"
+      })
+    }
+    if(checkUser) {
+      const otp = otpHelper.generateOTP();
+      user.otp = otp;
+      await otpHelper.sendOTP(otp)
+      return res.status(200).json({
+        "msg":"Otp Sent Sucessfully"
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+}
+
+
+exports.verifyOtp = async (req , res) => {
+  try {
+    const user = {
+      email: req.body.email,
+    }
+    const checkUser = await User.findOne({
+      where:
+      {
+        email: user.email
+      }
+    })
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+}
+
