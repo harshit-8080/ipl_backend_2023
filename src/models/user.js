@@ -17,17 +17,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init({
     name: {
-      type:DataTypes.STRING,
-      allowNull:false
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    email:{
-      type:DataTypes.STRING,
-      allowNull:false,
-      unique:true
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
     },
     password: {
-      type:DataTypes.STRING,
-      allowNull:false
+      type: DataTypes.STRING,
+      allowNull: false
     },
   }, {
     sequelize,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     const hash = bcrypt.hashSync(user.password, salt);
     // console.log(hash);
     user.password = hash;
-    
+
   });
 
   return User;

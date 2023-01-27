@@ -10,9 +10,11 @@ exports.createUser = async (req, res) => {
     const user = {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      verified: false
     };
 
+    this.requestOtp(user.email);
     const result = await User.create(user);
 
     return res.status(201).json({
@@ -96,15 +98,12 @@ exports.signin = async (req, res) => {
 }
 
 
-exports.requestOtp = async (req, res) => {
+exports.requestOtp = async (email) => {
   try {
-      const user = {
-      email: req.body.email,
-    }
     const checkUser = await User.findOne({
       where:
       {
-        email: user.email
+        email:email
       }
     })
     if (!checkUser) {
@@ -114,10 +113,10 @@ exports.requestOtp = async (req, res) => {
     }
     if(checkUser) {
       const otp = otpHelper.generateOTP();
-      user.otp = otp;
+      checkUser.otp = otp;
       await otpHelper.sendOTP(otp)
       return res.status(200).json({
-        "msg":"Otp Sent Sucessfully"
+        "msg":"OTP Sent Sucessfully"
       })
     }
   } catch (error) {
@@ -131,16 +130,29 @@ exports.requestOtp = async (req, res) => {
 
 exports.verifyOtp = async (req , res) => {
   try {
-    const user = {
-      email: req.body.email,
-    }
     const checkUser = await User.findOne({
       where:
       {
-        email: user.email
+        email: req.body.email
       }
-    })
-    
+    }) 
+    const  otp = req.body.otp 
+    if (!checkUser) {
+      return res.status(200).json({
+        "msg": "Invalid Email"
+      })
+    }
+    if(otp !== otp){
+      //console.log(checkUser.otp);
+      console.log(otp)
+       res.status(200).json({
+        "msg":"Invalid OTP"
+       })
+    }else{
+       res.status(200).json({
+        "msg":"OTP Verified Successfully"
+       })
+    } 
   } catch (error) {
     console.log(error);
     return res.status(500).json({
