@@ -17,11 +17,13 @@ exports.createUser = async (req, res) => {
     user.otp = otp
 
     const result = await User.create(user);
+    await result.save();
+    console.log(result)
     await otpHelper.sendOTP(otp)
-      return res.status(201).json({
-        sucess: true,
-        response: result,
-      });
+    return res.status(201).json({
+      sucess: true,
+      response: result,
+    });
 
   } catch (error) {
     console.log(error);
@@ -98,36 +100,6 @@ exports.signin = async (req, res) => {
 
 }
 
-
-// exports.requestOtp = async (email) => {
-//   try {
-//     const checkUser = await User.findOne({
-//       where:
-//       {
-//         email:email
-//       }
-//     })
-//     if (!checkUser) {
-//       return res.status(200).json({
-//         "msg": "Invalid Email"
-//       })
-//     }
-//     if(checkUser) {
-//       const otp = otpHelper.generateOTP();
-//       checkUser.otp = otp;
-//       await otpHelper.sendOTP(otp)
-//       return res.status(200).json({
-//         "msg":"OTP Sent Sucessfully"
-//       })
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       msg: "Internal server error",
-//     });
-//   }
-// }
-
 exports.verifyOtp = async (req, res) => {
   try {
     const checkUser = await User.findOne({
@@ -136,21 +108,24 @@ exports.verifyOtp = async (req, res) => {
         email: req.body.email
       }
     })
-    const otp = req.body.otp ;
-    if(!checkUser){
-      res.status(200).json({
-        "msg":"Invalid User"
-      })
-    }
-    if(checkUser && checkUser.otp !== otp ){
-      res.status(200).json({
-        "msg":"Invalid OTP"
-      })
-    }
-    else{
-      res.status(200).json({
-        "msg":"OTP Verified"
-      })
+    if (checkUser) {
+
+      if (!checkUser.verifed) {
+
+        const otp = req.body.otp;
+        if (otp == checkUser.otp) {
+          checkUser.verifed = true;
+          await checkUser.save();
+          return res.json({
+            "response": "User verified",
+            "user": checkUser
+          })
+        } else {
+          return res.json({
+            "response": "otp wrong or expired"
+          })
+        }
+      }
     }
   } catch (error) {
     console.log(error);

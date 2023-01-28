@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    otp: {
+      type: DataTypes.INTEGER,
+      required: true,
+    },
+    verified : {
+      type: DataTypes.BOOLEAN,
+      required: true,
+    }
   }, {
     sequelize,
     modelName: 'User',
