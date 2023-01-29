@@ -14,3 +14,14 @@ exports.sendOTP = async(otp) => {
       from: '+19896569746'
     })
 }
+
+exports.expiry_time = () => {
+
+  const expiry_time = AddMinutesToDate(new Date() , 5);
+  return expiry_time;
+
+}
+
+function AddMinutesToDate(date,minutes) {
+  return new Date(date.getTime() + minutes*60000);
+}

@@ -36,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     verified : {
       type: DataTypes.BOOLEAN,
       required: true,
-    }
+    },
+    otp_expiry:{
+      type:DataTypes.DATE,
+      required:true
+  },
   }, {
     sequelize,
     modelName: 'User',

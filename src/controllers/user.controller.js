@@ -15,6 +15,8 @@ exports.createUser = async (req, res) => {
     };
     const otp = otpHelper.generateOTP();
     user.otp = otp
+    const otp_expiry = otpHelper.expiry_time();
+    user.otp_expiry = otp_expiry
 
     const result = await User.create(user);
     await result.save();
@@ -113,15 +115,15 @@ exports.verifyOtp = async (req, res) => {
       if (!checkUser.verifed) {
 
         const otp = req.body.otp;
-        if (otp == checkUser.otp) {
+        if (otp == checkUser.otp && new Date() < checkUser.otp_expiry) {
           checkUser.verifed = true;
           await checkUser.save();
-          return res.json({
+          return res.status(201).json({
             "response": "User verified",
             "user": checkUser
           })
         } else {
-          return res.json({
+          return res.status(201).json({
             "response": "otp wrong or expired"
           })
         }
