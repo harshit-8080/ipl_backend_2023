@@ -14,24 +14,55 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Team.init({
-    name: {
-      type:DataTypes.STRING,
-      allowNull:false
+    Name:{
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    city:{
-      type:DataTypes.STRING,
-      allowNull:false
+    location:{
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    teamColour: {
-      type:DataTypes.STRING
+    owner: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    owner:{
-      type:DataTypes.STRING,
-      allowNull:false
+    numberofwins: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    head: {
-      type:DataTypes.STRING,
-      allowNull:false
+    foundingyear: {
+      type: DataTypes.INTEGER,
+      allowNull: false ,
+      unique: true
+    },
+    dresscolor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true 
+    },
+    sponser:{
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false 
+    },
+    captain: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true 
+    },
+    headcoach: {
+      type: DataTypes.STRING,
+      allowNull: false ,
+      unique: true 
+    },
+    battingcoach: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true 
+    },
+    bowlingcoach: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true 
     },
   }, {
     sequelize,
