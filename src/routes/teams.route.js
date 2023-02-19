@@ -9,6 +9,8 @@ TeamRouter.patch("/update", TeamController.updateTeam)
 
 TeamRouter.get("/getAllTeam", TeamController.getAllTeam)
 
+TeamRouter.get("/getByID/:id", TeamController.getByID)
+
 module.exports = {
   TeamRouter,
 };

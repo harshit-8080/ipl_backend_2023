@@ -95,3 +95,23 @@ exports.getAllTeam = async (req, res) => {
     });
   }
 }
+
+// get by id
+
+exports.getByID = async (req, res) => {
+  try {
+    const result = await Team.findOne({
+      where:{id:req.params.id},
+    })
+    console.log(id);
+    return res.status(201).json({
+      sucess: true,
+      response: result,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+}
