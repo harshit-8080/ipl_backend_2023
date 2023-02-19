@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    owner: {
+    owner:{
       type: DataTypes.STRING,
       allowNull: false
     },

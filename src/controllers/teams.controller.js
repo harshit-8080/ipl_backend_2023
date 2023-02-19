@@ -4,11 +4,17 @@ const { Team } = require("../models/index");
 exports.createTeam = async (req, res) => {
   try {
     const team = {
-      name: req.body.name,
-      city: req.body.city,
-      teamColour: req.body.teamColour,
+      Name: req.body.Name,
+      location: req.body.location,
       owner: req.body.owner,
-      head: req.body.head,
+      numberofwins: req.body.numberofwins,
+      foundingyear: req.body.foundingyear,
+      dresscolor: req.body.dresscolor,
+      sponser: req.body.sponser,
+      captain: req.body.captain,
+      headcoach: req.body.headcoach,
+      battingcoach: req.body.battingcoach,
+      bowlingcoach: req.body.bowlingcoach
     };
 
     const result = await Team.create(team);
@@ -16,6 +22,7 @@ exports.createTeam = async (req, res) => {
     return res.status(201).json({
       msg: result,
     });
+    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
