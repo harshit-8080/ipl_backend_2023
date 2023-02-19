@@ -62,12 +62,31 @@ exports.updateTeam = async (req, res) => {
         "result": result
       })
     }
-    else{
+    else {
       return res.status(200).json({
-        "msg":"User Not Found"
+        "msg": "User Not Found"
       })
     }
 
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      msg: "Internal server error",
+    });
+  }
+}
+
+//get all Team 
+
+exports.getAllTeam = async (req, res) => {
+  try {
+    const result = await Team.findAll()
+
+    return res.status(201).json({
+      sucess: true,
+      response: result,
+    });
 
   } catch (error) {
     console.log(error);
