@@ -103,7 +103,7 @@ exports.getByID = async (req, res) => {
     const result = await Team.findOne({
       where:{id:req.params.id},
     })
-    console.log(id);
+    console.log(req.params.id);
     return res.status(201).json({
       sucess: true,
       response: result,
