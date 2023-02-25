@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      
       this.belongsTo(models.Team,{
         foreignKey:'teamID',
         onDelete:'CASCADE',
@@ -29,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     contact:{
-      type: DataTypes.INTEGER,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     email:{
@@ -71,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
     teamID:{
       type: DataTypes.INTEGER,
       allowNull: false
-    }   
+    } 
   }, {
     sequelize,
     modelName: 'player',

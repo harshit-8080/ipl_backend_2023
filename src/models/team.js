@@ -36,13 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     foundingyear: {
       type: DataTypes.INTEGER,
-      allowNull: false ,
-      unique: true
+      allowNull: false
     },
     dresscolor: {
       type: DataTypes.STRING,
-      allowNull: false,
-      unique: true 
+      allowNull: false
     },
     sponser:{
       type: DataTypes.ARRAY(DataTypes.STRING),

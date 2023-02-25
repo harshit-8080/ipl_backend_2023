@@ -18,7 +18,7 @@ module.exports = {
         allowNull: false
       },
       contact:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       email:{

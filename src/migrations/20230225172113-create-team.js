@@ -28,13 +28,11 @@ module.exports = {
       },
       foundingyear: {
         type: Sequelize.INTEGER,
-        allowNull: false ,
-        unique: true
+        allowNull: false 
       },
       dresscolor: {
         type: Sequelize.STRING,
-        allowNull: false,
-        unique: true 
+        allowNull: false
       },
       sponser:{
         type: Sequelize.ARRAY(Sequelize.STRING),
